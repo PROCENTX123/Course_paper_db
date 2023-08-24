@@ -25,6 +25,8 @@ def fill_task(arr_client_and_user, arr_start_time,arr_end_time):
     arr_tasks = []
     arr_pairs_for_meeting = []
     arr_pairs_for_calls = []
+    arr_for_sale = []
+    arr_for_offered = []
     id = 1
 
 
@@ -47,14 +49,18 @@ def fill_task(arr_client_and_user, arr_start_time,arr_end_time):
         for start_time, end_time in product(arr_start_time, arr_end_time):
             task = (id, client_and_user[0], start_time, end_time, client_and_user[1])
             arr_tasks.append(task)
-            if id > 1250:
+            if id > 1000 and id <= 2000:
                 arr_pairs_for_calls.append((client_and_user[1], id))
-            else:
+            elif id > 0 and id <= 1000:
                 arr_pairs_for_meeting.append((client_and_user[1], id))
+            elif id > 2000 and id <= 2250:
+                arr_for_sale.append(id)
+            elif id > 2250 and id <=2500:
+                arr_for_offered.append(id)
             id+=1
     cursor.executemany("Insert into  task (id, client_id, start_time, end_time, user_assigned) values(?, ?, ?, ?, ?)", arr_tasks)
     con.commit()
-    return arr_pairs_for_meeting, arr_pairs_for_calls
+    return arr_pairs_for_meeting, arr_pairs_for_calls, arr_for_sale, arr_for_offered
 
 
 
