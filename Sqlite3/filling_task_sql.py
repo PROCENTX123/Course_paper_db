@@ -1,28 +1,32 @@
 import sqlite3
 from itertools import product
 
-#data
-arr_client_name = ["MTC"]
-arr_client_adress = ["Курская 4а"]
-arr_phone = ["11111"]
-arr_email = ["romkagrigorev@mail.ru"]
-arr_contact_person = ["Vasiliy"]
-arr_user_inserted = [1]
-id = 1
-arr_clients = []
+#обязательный сетап открытия
 
-#открытие коннекта
-con = sqlite3.connect("/home/roman/DataGripProjects/Couse_paper/identifier.sqlite")
-#поддержка foreign key
-con.execute("Pragma foreign_keys = 1")
-#открытие курсора
-cursor = con.cursor()
 
-#fixme когда создастся общий генератор данных вызывать эту функцию там
-def fill_task(id , ):
-    table_name = "task"
-    cursor.execute(f"Drop table {table_name}")
-    con.commit()
+def get_id_task_outcome():
+    con = sqlite3.connect("C:/Users/user/DataGripProjects/Course_paper_sql/identifier.sqlite")
+    con.execute("Pragma foreign_keys = 1")
+    cursor = con.cursor()
+
+    cursor.execute("select id from task_outcome")
+    result = cursor.fetchall()
+    arr_task_outcome = [row[0] for row in result]
+
+    cursor.close()
+    con.close()
+    return arr_task_outcome
+
+def fill_task(arr_client_and_user, arr_start_time,arr_end_time):
+    con = sqlite3.connect("C:/Users/user/DataGripProjects/Course_paper_sql/identifier.sqlite")
+    con.execute("Pragma foreign_keys = 1")
+    cursor = con.cursor()
+
+    arr_tasks = []
+    arr_pairs_for_meeting = []
+    arr_pairs_for_calls = []
+    id = 1
+
 
     cursor.execute("""CREATE TABLE task
         (
@@ -31,25 +35,30 @@ def fill_task(id , ):
         start_time timestamp,
         end_time timestamp,
         user_assigned integer,
-        task_outcome_id integer,
-        foreign key (client_id) references client(id),
-        foreign key (user_assigned) references user_account(id),
-        foreign key (task_outcome_id ) references task_outcome(id)
-        )""")
+        task_outcome_id integer default null,
+        foreign key (client_id) references client(id)
+        foreign key (user_assigned) references user_account(id)
+        foreign key(task_outcome_id) references task_outcome(id)
+        )
+        """)
     con.commit()
 
-    for client_name, client_adress, phone, email, contact_person, user_inserted in product(arr_client_name,
-                arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted):
-        client_account = (id, client_name, client_adress, phone, email, contact_person, user_inserted)
-        arr_clients.append(client_account)
-        id+=1
-    cursor.executemany("Insert into  client values(?, ?, ?, ?, ?, ?, ?)", arr_clients)
+    for client_and_user in arr_client_and_user:
+        for start_time, end_time in product(arr_start_time, arr_end_time):
+            task = (id, client_and_user[0], start_time, end_time, client_and_user[1])
+            arr_tasks.append(task)
+            if id > 1250:
+                arr_pairs_for_calls.append((client_and_user[1], id))
+            else:
+                arr_pairs_for_meeting.append((client_and_user[1], id))
+            id+=1
+    cursor.executemany("Insert into  task (id, client_id, start_time, end_time, user_assigned) values(?, ?, ?, ?, ?)", arr_tasks)
     con.commit()
+    return arr_pairs_for_meeting, arr_pairs_for_calls
 
-fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted)
 
-#закрытие курсора
-cursor.close()
 
-#закрытие подключения
-con.close()
+
+
+
+

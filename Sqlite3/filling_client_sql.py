@@ -1,32 +1,31 @@
 import sqlite3
 from itertools import product
 
-#data
-arr_client_name = ["MTC"]
-arr_client_adress = ["Курская 4а"]
-arr_phone = ["11111"]
-arr_email = ["romkagrigorev@mail.ru"]
-arr_contact_person = ["Vasiliy"]
-#fixme это foreign key, поправить это место потому что может встать рандомный id который крашнется
-arr_user_inserted = [1, 2]
-id = 1
-arr_clients = []
+def get_user_inserted():
+    # обязательный сетап открытия
+    con = sqlite3.connect("C:/Users/user/DataGripProjects/Course_paper_sql/identifier.sqlite")
+    cursor = con.cursor()
 
-#открытие коннекта
-con = sqlite3.connect("/home/roman/DataGripProjects/Couse_paper/identifier.sqlite")
-#поддержка foreign key
-con.execute("Pragma foreign_keys = 1")
-#открытие курсора
-cursor = con.cursor()
+    cursor.execute('select id from user_account')
+    user_id = cursor.fetchall()
+    arr_user_inserted = [row[0] for row in user_id]
 
-#fixme когда создастся общий генератор данных вызывать эту функцию там
-def fill_client(id ,arr_client_name, arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted):
-    table_name = "client"
-    cursor.execute(f"Drop table {table_name}")
-    con.commit()
+    cursor.close()
+    con.close()
+
+    return arr_user_inserted
+
+def fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted):
+    # обязательный сетап открытия
+    con = sqlite3.connect("C:/Users/user/DataGripProjects/Course_paper_sql/identifier.sqlite")
+    con.execute("Pragma foreign_keys = 1")
+    cursor = con.cursor()
+
+    arr_clients = []
+    arr_pairs = []
 
     cursor.execute("""CREATE TABLE client
-        (id integer primary key,
+        (id integer primary key ,
         client_name varchar(255),
         client_adress varchar(255),
         phone varchar(64),
@@ -37,18 +36,13 @@ def fill_client(id ,arr_client_name, arr_client_adress, arr_phone, arr_email, ar
         )""")
     con.commit()
 
+    #fixme сделать так что бы можно было указать количество элементов которые нужно создать
     for client_name, client_adress, phone, email, contact_person, user_inserted in product(arr_client_name,
                 arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted):
         client_account = (id, client_name, client_adress, phone, email, contact_person, user_inserted)
         arr_clients.append(client_account)
+        arr_pairs.append((id, user_inserted))
         id+=1
-    cursor.executemany("Insert into  client values(?, ?, ?, ?, ?, ?, ?)", arr_clients)
+    cursor.executemany("Insert into  client (id, client_name, client_adress, phone, email, contact_person, user_inserted)  values(?, ?, ?, ?, ?, ?, ?)", arr_clients)
     con.commit()
-
-fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted)
-
-#закрытие курсора
-cursor.close()
-
-#закрытие подключения
-con.close()
+    return arr_pairs

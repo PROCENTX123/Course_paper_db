@@ -25,7 +25,7 @@ id = 1
 
 def fill_user_account(id ,arr_name, arr_lastname, arr_username, arr_passwords):
     #удаление старой старой коллекции
-    col_user_account.drop()
+    # col_user_account.drop()
 
     for name, lastname, username, password in product(arr_name, arr_lastname, arr_username, arr_passwords):
         user_account = UserAccount(id, name, lastname, username, password)
