@@ -1,5 +1,5 @@
+import random
 import sqlite3
-from itertools import product
 
 def get_product_id():
     # обязательный сетап открытия
@@ -32,7 +32,9 @@ def fill_product_sold(arr_id_product, arr_task_for_sale, arr_units):
         foreign key (id_task) references task(id)
         )""")
     con.commit()
-    for id_product, id_task, units in product(arr_id_product, arr_task_for_sale, arr_units):
+    for id_task in arr_task_for_sale:
+        id_product = random.choice(arr_id_product)
+        units = random.choice(arr_units)
         sale = (id_product, id_task, units)
         arr_sales.append(sale)
     cursor.executemany("INSERT INTO product_sold (id_product, id_task, units) VALUES (?, ?, ?)", arr_sales)
