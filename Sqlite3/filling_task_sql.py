@@ -1,7 +1,6 @@
 import sqlite3
 from itertools import product
 
-#обязательный сетап открытия
 
 
 def get_id_task_outcome():
