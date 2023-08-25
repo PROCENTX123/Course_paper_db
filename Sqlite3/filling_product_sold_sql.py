@@ -25,11 +25,11 @@ def fill_product_sold(arr_id_product, arr_task_for_sale, arr_units):
 
     cursor.execute("""CREATE TABLE product_sold
         (id integer primary key autoincrement,
-        id_product integer,
-        id_task integer,
+        product_id integer,
+        task_id integer,
         units real,
-        foreign key (id_product) references product(id),
-        foreign key (id_task) references task(id)
+        foreign key (product_id) references product(id),
+        foreign key (task_id) references task(id)
         )""")
     con.commit()
     for id_task in arr_task_for_sale:
@@ -37,5 +37,5 @@ def fill_product_sold(arr_id_product, arr_task_for_sale, arr_units):
         units = random.choice(arr_units)
         sale = (id_product, id_task, units)
         arr_sales.append(sale)
-    cursor.executemany("INSERT INTO product_sold (id_product, id_task, units) VALUES (?, ?, ?)", arr_sales)
+    cursor.executemany("INSERT INTO product_sold (product_id, task_id, units) VALUES (?, ?, ?)", arr_sales)
     con.commit()

@@ -26,21 +26,24 @@ if __name__=="__main__":
     arr_lastname = ["Grigorev", "Ivanov", "Petrov", "Sidorov", "X"]
     arr_username = ["Procent", "Lox", "MOx", "Bubaleh", "uxz"]
     arr_passwords = ["12345", "54321", "11111", "123", "00000"]
-
+    # arr_name = ["Roman", "Ivan"]
+    # arr_lastname = ["Grigorev", "Ivanov"]
+    # arr_username = ["Procent", "Lox"]
+    # arr_passwords = ["12345", "54321"]
     filling_user_account_sql.fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords)
 
 
     #data
     id = 1
-    arr_client_name = ["MTC"]
-    arr_client_adress = ["Курская 4а"]
-    arr_phone = ["11111"]
+    arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS", "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал"]
+    arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15"]
+    arr_phone = ["11111", "22222", "33333", "444444", "55555"]
     arr_email = ["romkagrigorev@mail.ru"]
-    arr_contact_person = ["Vasiliy"]
+    arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya", "Kolya"]
     arr_user_inserted = filling_client_sql.get_user_inserted()
 
     pair_client_user = filling_client_sql.fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted)
-
+    print(len(pair_client_user))
 
     #data
     arr_client_and_user = pair_client_user
