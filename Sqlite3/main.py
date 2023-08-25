@@ -87,6 +87,26 @@ if __name__=="__main__":
     arr_units = [1]
     filling_product_offered_sql.fill_product_offered(arr_id_product, arr_for_offered, arr_units)
 
+    cursor.execute("""
+    select client.client_name,
+       count(distinct task.id) as total_tasks,
+       count(distinct call.id) as total_calls,
+       count(distinct meeting.id) as total_meeting,
+       count(distinct product_sold.id) as total_sold_product,
+       count(distinct product_offered.id) as total_product_offered
+    from client
+    join task on client.id = task.client_id
+    left join call on  task.id = CALL.task_id
+    left join meeting on task.id = meeting.task_id
+    left join product_sold  on task.id = product_sold.task_id
+    left join product_offered on task.id = product_offered.task_id
+    group by client.client_name;
+    """)
+
+    results = cursor.fetchall()
+    for row in results:
+        print(row)
+
     # сетап закрытия
     cursor.close()
     con.close()
