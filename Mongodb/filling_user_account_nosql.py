@@ -37,21 +37,4 @@ def fill_user_account(id ,arr_name, arr_lastname, arr_username, arr_passwords):
     return user_dict
 
 
-# if __name__ == "__main__":
-#     col_user_account = mydb["user_account"]
-#     col_user_account.drop()
-#
-#     arr_name = ["Roman", "Ivan", "Vladimir", "Dmitriy", "Nikita"]
-#     arr_lastname = ["Grigorev", "Ivanov", "Petrov", "Sidorov", "X"]
-#     arr_username = ["Procent", "Lox", "MOx", "Bubaleh", "uxz"]
-#     arr_passwords = ["12345", "54321", "11111", "123", "00000"]
-#     id = 1
-#
-#     user_dict = fill_user_account(id, arr_name, arr_lastname, arr_username, arr_passwords)
-#
-#     for key, value in user_dict.items():
-#         print(f"ID: {key}, Name: {value.first_name}, Age: {value.last_name}, Name_lastname: {value._name_lastname_user}")
-#
-#     x = 1
-
 

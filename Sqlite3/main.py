@@ -65,9 +65,9 @@ if __name__=="__main__":
     #data
     arr_start_time_call = [datetime.datetime(year=2023, month=9, day=25, hour=9, minute=00, second=00)]
     arr_end_time_call = [datetime.datetime(year=2023, month=9, day=25, hour=12, minute=00, second=00)]
-
-
     filling_call_sql.fill_call(arr_pair_for_call, arr_start_time_call, arr_end_time_call)
+
+
 
     #data
     product_name = ["Стекло", "Гантели", "Машина"]
