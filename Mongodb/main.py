@@ -6,6 +6,7 @@ import filling_meeting_nosql
 import filling_product_nosql
 import filling_product_sold_nosql
 import filling_product_offered_nosql
+import filling_statistics_per_day
 import drop_collections
 import datetime
 from pymongo import MongoClient
@@ -80,14 +81,11 @@ if __name__ == "__main__":
     product_dict = filling_product_nosql.fill_product(product_name, unit, price_per_unit, unit_in_stock)
 
 
-    product_sold = filling_product_sold_nosql.fill_product_sold(task_dict, arr_for_sale, product_dict)
+    product_sold_dict = filling_product_sold_nosql.fill_product_sold(task_dict, arr_for_sale, product_dict)
 
-    product_offered = filling_product_offered_nosql.fill_product_offered(task_dict, arr_for_offered, product_dict)
-
-
+    product_offered_dict = filling_product_offered_nosql.fill_product_offered(task_dict, arr_for_offered, product_dict)
 
 
-
-
+    statistic = filling_statistics_per_day.filling_statistic(task_dict, meeting_dict, calls_dict, product_sold_dict, product_offered_dict)
 
     client.close()

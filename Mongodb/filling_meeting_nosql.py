@@ -15,13 +15,15 @@ class Meeting:
         self.end_time = end_time
         self.client_id = client_id
 
+
     def __dict__(self):
         return {
             "id": self.id,
             "user_account_id": self.user_account_id,
             "task_id": self.task_id,
             "start_time": self.start_time,
-            "end_time": self.end_time
+            "end_time": self.end_time,
+            "client_id": self.client_id
         }
 
 def fill_meeting(task_dict ,arr_pair_for_meeting, arr_start_time, arr_end_time):
@@ -31,8 +33,8 @@ def fill_meeting(task_dict ,arr_pair_for_meeting, arr_start_time, arr_end_time):
     for key, value in task_dict.items():
         if (value.user_assigned, value.id) in arr_pair_for_meeting:
             for start_time, end_time in product(arr_start_time, arr_end_time):
-                call = Meeting(id, value.user_assigned, value.id, start_time, end_time, value.client_id)
-                col_meet.insert_one(call.__dict__())
-                meeting_dict[id] = call
+                meeting = Meeting(id, value.user_assigned, value.id, start_time, end_time, value.client_id)
+                col_meet.insert_one(meeting.__dict__())
+                meeting_dict[id] = meeting
                 id += 1
     return meeting_dict

@@ -8,7 +8,7 @@ mydb = client['course_paper']
 col_sold = mydb["product_sold"]
 
 class ProductSold:
-    def __init__(self, id, product_id, task_id, units, price_per_unit, price, client_id):
+    def __init__(self, id, product_id, task_id, units, price_per_unit, price, client_id, client_name):
         self.id = id
         self.product_id = product_id
         self.task_id = task_id
@@ -16,6 +16,7 @@ class ProductSold:
         self.price_per_unit = price_per_unit
         self.price = price
         self.client_id = client_id
+        self.client_name = client_name
 
     def __dict__(self):
         return {
@@ -25,7 +26,11 @@ class ProductSold:
             "units": self.units,
             "price_per_unit": self.price_per_unit,
             "price": self.price,
+            "client_id": self.client_id,
+            "client_name": self.client_name
         }
+    def __str__(self):
+        return f"{self.id} {self.product_id} {self.task_id} {self.units}"
 
 def fill_product_sold(task_dict, arr_for_sale, product_dict):
     product_sold_dict = {}
@@ -36,7 +41,7 @@ def fill_product_sold(task_dict, arr_for_sale, product_dict):
             sold = ProductSold(id, id_product, key_task, product_dict[id_product].unit,
                                 product_dict[id_product].price_per_unit,
                                 product_dict[id_product].unit * product_dict[id_product].price_per_unit,
-                                value_task.client_id)
+                                value_task.client_id, value_task.client_name)
             col_sold.insert_one(sold.__dict__())
             product_sold_dict[id] = sold
             id += 1

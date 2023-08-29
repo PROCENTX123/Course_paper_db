@@ -25,6 +25,7 @@ class ProductOffered:
             "units": self.units,
             "price_per_unit": self.price_per_unit,
             "price": self.price,
+            "client_id": self.client_id
         }
 
 def fill_product_offered(task_dict, arr_for_offer, product_dict):
@@ -38,6 +39,7 @@ def fill_product_offered(task_dict, arr_for_offer, product_dict):
                                 product_dict[id_product].unit * product_dict[id_product].price_per_unit,
                                 value_task.client_id)
             col_offer.insert_one(offer.__dict__())
+            # product_offer_dict[value_task.client_id] = key_task, id, id_product, product_dict[id_product].unit, product_dict[id_product].unit * product_dict[id_product].price_per_unit
             product_offer_dict[id] = offer
             id += 1
     return product_offer_dict

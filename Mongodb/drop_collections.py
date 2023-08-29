@@ -16,6 +16,9 @@ def drop_collections():
     col_sold = mydb["product_sold"]
     col_sold.drop()
 
+    col_statistic = mydb["statistic"]
+    col_statistic.drop()
+
     col_offer = mydb["product_offered"]
     col_offer.drop()
 

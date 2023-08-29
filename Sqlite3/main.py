@@ -1,5 +1,7 @@
 import sqlite3
 import datetime
+import time
+
 import drop_tables
 import filling_user_account_sql
 import filling_client_sql
@@ -43,7 +45,7 @@ if __name__=="__main__":
     arr_user_inserted = filling_client_sql.get_user_inserted()
 
     pair_client_user = filling_client_sql.fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted)
-    print(len(pair_client_user))
+
 
     #data
     arr_client_and_user = pair_client_user
@@ -87,6 +89,7 @@ if __name__=="__main__":
     arr_units = [1]
     filling_product_offered_sql.fill_product_offered(arr_id_product, arr_for_offered, arr_units)
 
+    time_check_start = time.time()
     cursor.execute("""
     select client.client_name,
        count(distinct task.id) as total_tasks,
@@ -102,10 +105,12 @@ if __name__=="__main__":
     left join product_offered on task.id = product_offered.task_id
     group by client.client_name;
     """)
+    time_check_end = time.time()
+    print(time_check_end - time_check_start) #8.886452674865723 время выполнения join
 
-    results = cursor.fetchall()
-    for row in results:
-        print(row)
+    # results = cursor.fetchall()
+    # for row in results:
+    #     print(row)
 
     # сетап закрытия
     cursor.close()
