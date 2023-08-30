@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from itertools import product
+from tqdm import tqdm
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -23,14 +24,25 @@ class Products:
             "price_per_unit": self.price_per_unit,
             "units_in_stock": self.units_in_stock
         }
+    def to_dict(self):
+        return self.__dict__()
 
 
 def fill_product(arr_product_name, arr_unit, arr_price_per_unit, arr_units_in_stock):
-    product_dict = {}
+    product_list = []
+    product_doc_list = []
     id = 1
-    for product_name, unit, price_per_unit, units_in_stock in product(arr_product_name, arr_unit, arr_price_per_unit, arr_units_in_stock):
-        products = Products(id, product_name, unit, price_per_unit, units_in_stock)
-        col_product.insert_one(products.__dict__())
-        product_dict[id] = products
-        id+=1
-    return product_dict
+    total_product = len(arr_product_name) * len(arr_unit) * len(arr_price_per_unit) * len(arr_units_in_stock)
+    with tqdm(total=total_product, desc="Filling product") as pbar:
+        for product_name, unit, price_per_unit, units_in_stock in product(arr_product_name, arr_unit, arr_price_per_unit, arr_units_in_stock):
+
+            product_list.append((id, product_name, unit, price_per_unit, units_in_stock))
+            products = Products(id, product_name, unit, price_per_unit, units_in_stock)
+
+            product_doc_list.append(products.to_dict())
+            id+=1
+            pbar.update(1)
+
+    col_product.insert_many(product_doc_list)
+    print("Product completed")
+    return product_list

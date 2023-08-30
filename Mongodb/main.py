@@ -26,26 +26,39 @@ if __name__ == "__main__":
     arr_passwords = ["12345", "54321", "11111", "123", "00000"]
     id = 1
 
-    user_dict = filling_user_account_nosql.fill_user_account(id, arr_name, arr_lastname, arr_username, arr_passwords)
+    user_dict = filling_user_account_nosql.fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords)
     # for key, value in user_dict.items():
     #     print(f"ID: {key}, Name: {value.first_name}, Age: {value.last_name}, Name_lastname: {value._name_lastname_user}")
 
 
-    #data
-    arr_client_name = ["BBC", "HBC"]
-    arr_client_adress = ["Курская 4а"]
-    arr_phone = ["11111"]
-    arr_email = ["romkagrigorev@mail.ru"]
-    arr_contact_person = ["Vasiliy"]
-    arr_user_inserted = filling_client_nosql.get_user_inserted()
-    id = 1
+    # 5 000 тасков
+    # arr_client_name = ["BBC", "HBC"]
+    # arr_client_adress = ["Курская 4а"]
+    # arr_phone = ["11111"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy"]
 
-    pair_client_user, client_dict = filling_client_nosql.fill_client(id, arr_client_name, arr_client_adress, arr_phone,
+    #120 000 тасков
+    # arr_client_name = ["BBC", "HBC", "Rockstar", "Ponchiki"]
+    # arr_client_adress = ["Курская 4а", "Василевская 16"]
+    # arr_phone = ["11111", "22222", "33333"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy", "Vanya"]
+
+    #5 млн тасков
+    arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
+                       "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал"]
+    arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15"]
+    arr_phone = ["11111", "22222", "33333", "444444", "55555"]
+    arr_email = ["romkagrigorev@mail.ru"]
+    arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya", "Kolya"]
+
+    arr_user_inserted = filling_client_nosql.get_user_inserted()
+
+
+    pair_client_user, client_dict = filling_client_nosql.fill_client(arr_client_name, arr_client_adress, arr_phone,
                                                                      arr_email, arr_contact_person, arr_user_inserted,
                                                                      user_dict)
-    # for key, value in client_dict.items():
-    #     print(f"ID: {key}, Name: {value._name_lastname_user_inserted}, iserted_id:{value.user_inserted}")
-
 
     # data
     arr_start_time = [datetime.datetime(year=2023, month=8, day=18, hour=9, minute=00, second=00),
@@ -56,36 +69,32 @@ if __name__ == "__main__":
     task_dict, arr_pair_for_meeting, arr_pair_for_call, arr_for_sale, arr_for_offered = filling_task_nosql.fill_task(
         client_dict, arr_start_time, arr_end_time)
 
-    # print(arr_pair_for_meeting)
-    # print(arr_pair_for_call)
-    # print(arr_for_sale)
-    # print(arr_for_offered)
-
     #data
     arr_start_time_meeting = [datetime.datetime(year=2023, month=9, day=19, hour=10, minute=00, second=00)]
     arr_end_time_meeting = [datetime.datetime(year=2023, month=9, day=19, hour=14, minute=00, second=00)]
-    meeting_dict = filling_meeting_nosql.fill_meeting(task_dict, arr_pair_for_meeting, arr_start_time_meeting, arr_end_time_meeting)
-
+    meeting_list = filling_meeting_nosql.fill_meeting(task_dict, arr_pair_for_meeting, arr_start_time_meeting,
+                                                      arr_end_time_meeting)
 
     #data
     # print(len(arr_pair_for_call))
     arr_start_time_call = [datetime.datetime(year=2023, month=9, day=25, hour=9, minute=00, second=00)]
     arr_end_time_call = [datetime.datetime(year=2023, month=9, day=25, hour=12, minute=00, second=00)]
-    calls_dict = filling_call_nosql.fill_call(task_dict, arr_pair_for_call, arr_start_time_call, arr_end_time_call)
+    calls_list = filling_call_nosql.fill_call(task_dict, arr_pair_for_call, arr_start_time_call, arr_end_time_call)
 
     #data
     product_name = ["Стекло", "Гантели", "Машина"]
     unit = [2, 3, 4, 5]
     price_per_unit = [100, 200, 300]
     unit_in_stock = [10]
-    product_dict = filling_product_nosql.fill_product(product_name, unit, price_per_unit, unit_in_stock)
+    product_list = filling_product_nosql.fill_product(product_name, unit, price_per_unit, unit_in_stock)
 
 
-    product_sold_dict = filling_product_sold_nosql.fill_product_sold(task_dict, arr_for_sale, product_dict)
+    product_sold_list = filling_product_sold_nosql.fill_product_sold(task_dict, arr_for_sale, product_list)
 
-    product_offered_dict = filling_product_offered_nosql.fill_product_offered(task_dict, arr_for_offered, product_dict)
+    product_offered_list = filling_product_offered_nosql.fill_product_offered(task_dict, arr_for_offered, product_list)
 
 
-    statistic = filling_statistics_per_day.filling_statistic(task_dict, meeting_dict, calls_dict, product_sold_dict, product_offered_dict)
+
+    statistic = filling_statistics_per_day.filling_statistic(meeting_list, calls_list, product_sold_list, product_offered_list)
 
     client.close()
