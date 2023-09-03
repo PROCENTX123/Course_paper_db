@@ -3,6 +3,7 @@ from itertools import product
 from tqdm import tqdm
 import gc
 import time
+import sys
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -63,12 +64,15 @@ def fill_task(client_dict, arr_start_time, arr_end_time):
 
                 pbar.update(1)
 
+    size_in_bytes = sys.getsizeof(task_doc_list)
+    print(f"Размер списка в байтах: {size_in_bytes} байт")
+
     time_start = time.time()
     col_task.insert_many(task_doc_list)
     time_end = time.time()
-    print(f"Запись данных тасков {time_end - time_start}")
+    # print(f"Запись данных тасков {time_end - time_start}")
 
-    print("Task completed")
+    # print("Task completed")
 
     del task_doc_list
     gc.collect()

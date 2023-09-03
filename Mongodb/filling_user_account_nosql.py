@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from itertools import product
 from tqdm import tqdm
 import time
+import sys
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -48,10 +49,15 @@ def fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords):
             id+=1
 
             pbar.update(1)
+
+    size_in_bytes = sys.getsizeof(user_doc_list)
+
+    print(f"Размер списка в байтах: {size_in_bytes} байт")
+
     time_start = time.time()
     col_user_account.insert_many(user_doc_list)
     time_end = time.time()
-    print(f"Запись данных юзеров {time_end - time_start}")
+    # print(f"Запись данных юзеров {time_end - time_start}")
     # print("User_account completed")
     return user_dict
 

@@ -3,6 +3,7 @@ from itertools import product
 from tqdm import tqdm
 import gc
 import time
+import sys
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -45,10 +46,13 @@ def fill_product(arr_product_name, arr_unit, arr_price_per_unit, arr_units_in_st
             id+=1
             pbar.update(1)
 
+    size_in_bytes = sys.getsizeof(product_doc_list)
+    print(f"Размер списка в байтах: {size_in_bytes} байт")
+
     time_start = time.time()
     col_product.insert_many(product_doc_list)
     time_end = time.time()
-    print(f"Запись данных продуктов {time_end - time_start}")
+    # print(f"Запись данных продуктов {time_end - time_start}")
     # print("Product completed")
 
     del product_doc_list

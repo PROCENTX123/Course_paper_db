@@ -3,6 +3,7 @@ from itertools import product
 from tqdm import tqdm
 import gc
 import time
+import sys
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -55,10 +56,13 @@ def fill_call(arr_pair_for_call, arr_start_time, arr_end_time):
         #         for start_time, end_time in product(arr_start_time, arr_end_time):
         #             call = Call(id, value.user_assigned, value.id, start_time, end_time, value.client_id, value.client_name)
 
+    size_in_bytes = sys.getsizeof(call_doc_list)
+    print(f"Размер списка в байтах: {size_in_bytes} байт")
+
     time_start = time.time()
     col_call.insert_many(call_doc_list)
     time_end = time.time()
-    print(f"Запись данных звонков {time_end - time_start}")
+    # print(f"Запись данных звонков {time_end - time_start}")
     # print("Call list completed")
 
     del call_doc_list

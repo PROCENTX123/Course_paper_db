@@ -1,6 +1,7 @@
 from pymongo import MongoClient, ASCENDING, DESCENDING
 from tqdm import tqdm
 import time
+import sys
 
 
 #открытие коннекта
@@ -72,10 +73,14 @@ def filling_statistic(meeting_list, call_list, product_sold_list, product_offere
                                   None, offer[5], offer[3], offer[1])
             statistic_doc_list.append(statistic.to_dict())
             pbar.update(1)
+
+    size_in_bytes = sys.getsizeof(statistic_doc_list)
+    print(f"Размер списка в байтах: {size_in_bytes} байт")
+
     time_start = time.time()
     col_statistic.insert_many(statistic_doc_list)
     time_end = time.time()
-    print(f"Запись данных статистики {time_end - time_start}")
+    # print(f"Запись данных статистики {time_end - time_start}")
 
     # col_statistic.create_index([("price_sale", ASCENDING), ("client_name", DESCENDING)])
     # col_statistic.create_index(["product_id", ASCENDING])

@@ -3,6 +3,7 @@ from itertools import product
 from tqdm import tqdm
 import gc
 import time
+import sys
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -65,11 +66,13 @@ def fill_meeting(arr_pair_for_meeting, arr_start_time, arr_end_time):
         #             meeting = Meeting(id, value.user_assigned, value.id, start_time, end_time, value.client_id,
         #                               value.client_name)
 
+    size_in_bytes = sys.getsizeof(meeting_doc_list)
+    print(f"Размер списка в байтах: {size_in_bytes} байт")
 
     time_start = time.time()
     col_meet.insert_many(meeting_doc_list)
     time_end = time.time()
-    print(f"Запись данных встреч {time_end - time_start}")
+    # print(f"Запись данных встреч {time_end - time_start}")
 
     # print("Meeting completed")
 

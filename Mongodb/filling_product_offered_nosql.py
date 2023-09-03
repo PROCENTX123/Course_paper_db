@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from tqdm import tqdm
 import gc
 import time
+import sys
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -64,10 +65,13 @@ def fill_product_offered(arr_for_offer, product_list):
         #                             value_task.client_id, value_task.client_name,
         #                                value_task.start_time, value_task.end_time)
 
+    size_in_bytes = sys.getsizeof(offer_doc_list)
+    print(f"Размер списка в байтах: {size_in_bytes} байт")
+
     time_start = time.time()
     col_offer.insert_many(offer_doc_list)
     time_end = time.time()
-    print(f"Запись данных рекомендаций {time_end - time_start}")
+    # print(f"Запись данных рекомендаций {time_end - time_start}")
     # print("Offer completed")
 
     del offer_doc_list
