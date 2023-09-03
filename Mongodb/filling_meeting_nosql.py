@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from itertools import product
 from tqdm import tqdm
+import gc
+import time
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -31,12 +33,12 @@ class Meeting:
     def to_dict(self):
         return self.__dict__()
 
-def fill_meeting(task_dict ,arr_pair_for_meeting, arr_start_time, arr_end_time):
+def fill_meeting(arr_pair_for_meeting, arr_start_time, arr_end_time):
     meeting_list = []
     meeting_doc_list = []
     id = 1
 
-    total_items = len(task_dict) / 4
+    total_items = len(arr_pair_for_meeting)
 
     with tqdm(total=total_items, desc="Filling meeting") as pbar:
         for user_task_client in arr_pair_for_meeting:
@@ -64,6 +66,14 @@ def fill_meeting(task_dict ,arr_pair_for_meeting, arr_start_time, arr_end_time):
         #                               value.client_name)
 
 
+    time_start = time.time()
     col_meet.insert_many(meeting_doc_list)
-    print("Meeting completed")
+    time_end = time.time()
+    print(f"Запись данных встреч {time_end - time_start}")
+
+    # print("Meeting completed")
+
+    del meeting_doc_list
+    del arr_pair_for_meeting
+    gc.collect()
     return meeting_list

@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from itertools import product
 from tqdm import tqdm
+import gc
+import time
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -43,6 +45,13 @@ def fill_product(arr_product_name, arr_unit, arr_price_per_unit, arr_units_in_st
             id+=1
             pbar.update(1)
 
+    time_start = time.time()
     col_product.insert_many(product_doc_list)
-    print("Product completed")
+    time_end = time.time()
+    print(f"Запись данных продуктов {time_end - time_start}")
+    # print("Product completed")
+
+    del product_doc_list
+    gc.collect()
+
     return product_list

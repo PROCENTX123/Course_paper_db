@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from itertools import product
 from tqdm import tqdm
+import gc
+import time
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -33,7 +35,6 @@ class Task:
 
 def fill_task(client_dict, arr_start_time, arr_end_time):
     id = 1
-    task_dict = {}
     task_doc_list = []
 
     arr_pairs_for_meeting = []
@@ -57,14 +58,19 @@ def fill_task(client_dict, arr_start_time, arr_end_time):
                     arr_for_sale.append((id, value.id, value.client_name, start_time, end_time))
                 elif id > count_all_task * 0.75 and id <=count_all_task:
                     arr_for_offered.append((id, value.id, value.client_name, start_time, end_time))
-                #fixme прочитать в клиенте
-                task_doc = task.to_dict()
-                task_doc_list.append(task_doc)
-                task_dict[id] = task
+                task_doc_list.append(task.to_dict())
                 id += 1
 
                 pbar.update(1)
 
+    time_start = time.time()
     col_task.insert_many(task_doc_list)
+    time_end = time.time()
+    print(f"Запись данных тасков {time_end - time_start}")
+
     print("Task completed")
-    return task_dict, arr_pairs_for_meeting, arr_pairs_for_calls, arr_for_sale, arr_for_offered
+
+    del task_doc_list
+    gc.collect()
+
+    return arr_pairs_for_meeting, arr_pairs_for_calls, arr_for_sale, arr_for_offered

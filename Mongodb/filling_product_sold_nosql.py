@@ -1,6 +1,8 @@
 import random
 from pymongo import MongoClient
 from tqdm import tqdm
+import gc
+import time
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -36,11 +38,11 @@ class ProductSold:
     def to_dict(self):
         return self.__dict__()
 
-def fill_product_sold(task_dict, arr_for_sale, product_list):
+def fill_product_sold(arr_for_sale, product_list):
     product_sold_list = []
     sold_doc_list = []
     id = 1
-    total_sold = len(task_dict) / 4
+    total_sold = len(arr_for_sale)
     with tqdm(total=total_sold, desc="Filling sold") as pbar:
         for from_task in arr_for_sale:
             product = random.choice(product_list)
@@ -64,6 +66,14 @@ def fill_product_sold(task_dict, arr_for_sale, product_list):
         #                             value_task.start_time, value_task.end_time)
 
 
+    time_start = time.time()
     col_sold.insert_many(sold_doc_list)
-    print("Sold completed")
+    time_end = time.time()
+    print(f"Запись данных продаж {time_end - time_start}")
+    # print("Sold completed")
+
+    del sold_doc_list
+    del arr_for_sale
+    gc.collect()
+
     return product_sold_list

@@ -48,8 +48,11 @@ def fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords):
             id+=1
 
             pbar.update(1)
+    time_start = time.time()
     col_user_account.insert_many(user_doc_list)
-    print("User_account completed")
+    time_end = time.time()
+    print(f"Запись данных юзеров {time_end - time_start}")
+    # print("User_account completed")
     return user_dict
 
 

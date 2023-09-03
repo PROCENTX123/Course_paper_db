@@ -1,5 +1,7 @@
 import sqlite3
 from itertools import product
+import time
+import sys
 
 
 def fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords):
@@ -19,8 +21,15 @@ def fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords):
     for name, lastname, username, password in product(arr_name, arr_lastname, arr_username, arr_passwords):
         user_account = (name, lastname, username, password)
         arr_users.append(user_account)
+
+    list_size_in_gigabytes = sys.getsizeof(arr_users) / (1024 ** 3)
+    print(f"Размер списка в гигабайтах: {list_size_in_gigabytes} ГБ")
+
+    time_start = time.time()
     cursor.executemany("INSERT INTO user_account (first_name, last_name, user_name, password) VALUES (?, ?, ?, ?)", arr_users)
     con.commit()
+    time_end = time.time()
+    # print(f"Запись данных юзеров {time_end - time_start}")
 
 
 

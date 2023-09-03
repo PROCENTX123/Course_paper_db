@@ -1,5 +1,7 @@
 import random
 import sqlite3
+import time
+import sys
 
 def get_product_id():
     # обязательный сетап открытия
@@ -37,5 +39,12 @@ def fill_product_sold(arr_id_product, arr_task_for_sale, arr_units):
         units = random.choice(arr_units)
         sale = (id_product, id_task, units)
         arr_sales.append(sale)
+
+    list_size_in_gigabytes = sys.getsizeof(arr_sales) / (1024 ** 3)
+    print(f"Размер списка в гигабайтах: {list_size_in_gigabytes} ГБ")
+
+    time_start = time.time()
     cursor.executemany("INSERT INTO product_sold (product_id, task_id, units) VALUES (?, ?, ?)", arr_sales)
     con.commit()
+    time_end = time.time()
+    # print(f"Запись данных продаж {time_end - time_start}")

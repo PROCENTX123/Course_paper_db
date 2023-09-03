@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from itertools import product
 from tqdm import tqdm
+import gc
+import time
 
 
 #открытие коннекта
@@ -73,9 +75,15 @@ def fill_client(arr_client_name, arr_client_adress, arr_phone, arr_email, arr_co
             id+=1
 
             pbar.update(1)
+    time_start = time.time()
     col_client.insert_many(arr_client_doc)
-    print("Client completed")
+    time_end = time.time()
+    print(f"Запись данных клиентов {time_end - time_start}")
+
+    # print("Client completed")
+    del arr_client_doc
+    gc.collect()
+
     return arr_pairs, client_dict
 
 
-## 30 000 клиентов 7 секунд

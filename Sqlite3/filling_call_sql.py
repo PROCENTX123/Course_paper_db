@@ -1,5 +1,7 @@
 import sqlite3
 from itertools import product
+import time
+import sys
 
 
 
@@ -45,5 +47,12 @@ def fill_call(pair_user_task, arr_start_time, arr_end_time):
             call = (id, user_and_task[0], user_and_task[1], start_time, end_time)
             arr_calls.append(call)
             id+=1
+
+    list_size_in_gigabytes = sys.getsizeof(arr_calls) / (1024 ** 3)
+    print(f"Размер списка в гигабайтах: {list_size_in_gigabytes} ГБ")
+
+    time_start = time.time()
     cursor.executemany("Insert into  call (id, user_account_id, task_id, start_time, end_time) values(?, ?, ?, ?, ?)", arr_calls)
     con.commit()
+    time_end = time.time()
+    # print(f"Запись данных звонков {time_end - time_start}")

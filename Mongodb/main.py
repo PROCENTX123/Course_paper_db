@@ -45,11 +45,54 @@ if __name__ == "__main__":
     # arr_email = ["romkagrigorev@mail.ru"]
     # arr_contact_person = ["Vasiliy", "Vanya"]
 
+    #675 000 тасков
+    # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS"]
+    # arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22"]
+    # arr_phone = ["11111", "22222", "33333"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy", "Vanya", "Tolya"]
+
+    # 2 080 000 тасков
+    # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
+    #                    "HR", "Tundra", "5 озер"]
+    # arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б"]
+    # arr_phone = ["11111", "22222", "33333", "444444"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya"]
+
+    # 3 200 000 тасков
+    # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
+    #                    "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал"]
+    # arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б"]
+    # arr_phone = ["11111", "22222", "33333", "444444", "555555"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya"]
+
     #5 млн тасков
+    # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
+    #                    "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал"]
+    # arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15"]
+    # arr_phone = ["11111", "22222", "33333", "444444", "55555"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya", "Kolya"]
+
+    #9 120 000 тасков
+    # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
+    #                    "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал", "DYW", "Тинькофф", "МТС"]
+    # arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15",
+    #                      "Заводская 30", "Скобелевская 16", "Краснознаменская 20"]
+    # arr_phone = ["11111", "22222", "33333", "444444", "55555", "6666666"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya"]
+
+
+    #13.2 млн тасков
     arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
-                       "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал"]
-    arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15"]
-    arr_phone = ["11111", "22222", "33333", "444444", "55555"]
+                       "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал", "DYW", "Тинькофф", "МТС", "Билайн",
+                       "Мегафон", "Райфайзен"]
+    arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15",
+                         "Заводская 30", "Скобелевская 16", "Краснознаменская 20"]
+    arr_phone = ["11111", "22222", "33333", "444444", "55555", "6666666"]
     arr_email = ["romkagrigorev@mail.ru"]
     arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya", "Kolya"]
 
@@ -66,32 +109,32 @@ if __name__ == "__main__":
     arr_end_time = [datetime.datetime(year=2023, month=8, day=18, hour=13, minute=00, second=00),
                     datetime.datetime(year=2023, month=8, day=18, hour=15, minute=00, second=00)]
 
-    task_dict, arr_pair_for_meeting, arr_pair_for_call, arr_for_sale, arr_for_offered = filling_task_nosql.fill_task(
+    arr_for_meeting, arr_for_call, arr_for_sale, arr_for_offered = filling_task_nosql.fill_task(
         client_dict, arr_start_time, arr_end_time)
 
     #data
     arr_start_time_meeting = [datetime.datetime(year=2023, month=9, day=19, hour=10, minute=00, second=00)]
     arr_end_time_meeting = [datetime.datetime(year=2023, month=9, day=19, hour=14, minute=00, second=00)]
-    meeting_list = filling_meeting_nosql.fill_meeting(task_dict, arr_pair_for_meeting, arr_start_time_meeting,
+    meeting_list = filling_meeting_nosql.fill_meeting(arr_for_meeting, arr_start_time_meeting,
                                                       arr_end_time_meeting)
 
     #data
     # print(len(arr_pair_for_call))
     arr_start_time_call = [datetime.datetime(year=2023, month=9, day=25, hour=9, minute=00, second=00)]
     arr_end_time_call = [datetime.datetime(year=2023, month=9, day=25, hour=12, minute=00, second=00)]
-    calls_list = filling_call_nosql.fill_call(task_dict, arr_pair_for_call, arr_start_time_call, arr_end_time_call)
+    calls_list = filling_call_nosql.fill_call(arr_for_call, arr_start_time_call, arr_end_time_call)
 
     #data
     product_name = ["Стекло", "Гантели", "Машина"]
-    unit = [2, 3, 4, 5]
-    price_per_unit = [100, 200, 300]
+    unit = [2, 3, 4, 5, 6, 7 , 8]
+    price_per_unit = [100, 200, 300, 400, 500, 600]
     unit_in_stock = [10]
     product_list = filling_product_nosql.fill_product(product_name, unit, price_per_unit, unit_in_stock)
 
 
-    product_sold_list = filling_product_sold_nosql.fill_product_sold(task_dict, arr_for_sale, product_list)
+    product_sold_list = filling_product_sold_nosql.fill_product_sold(arr_for_sale, product_list)
 
-    product_offered_list = filling_product_offered_nosql.fill_product_offered(task_dict, arr_for_offered, product_list)
+    product_offered_list = filling_product_offered_nosql.fill_product_offered(arr_for_offered, product_list)
 
 
 

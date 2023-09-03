@@ -1,5 +1,7 @@
 import sqlite3
 from itertools import product
+import time
+import sys
 
 def get_user_inserted():
     # обязательный сетап открытия
@@ -36,13 +38,23 @@ def fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, ar
         )""")
     con.commit()
 
-    #fixme сделать так что бы можно было указать количество элементов которые нужно создать
+
+
     for client_name, client_adress, phone, email, contact_person, user_inserted in product(arr_client_name,
                 arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted):
         client_account = (id, client_name, client_adress, phone, email, contact_person, user_inserted)
         arr_clients.append(client_account)
         arr_pairs.append((id, user_inserted))
         id+=1
+
+
+    list_size_in_gigabytes = sys.getsizeof(arr_clients) / (1024 ** 3)
+    print(f"Размер списка в гигабайтах: {list_size_in_gigabytes} ГБ")
+
+
+    time_start = time.time()
     cursor.executemany("Insert into  client (id, client_name, client_adress, phone, email, contact_person, user_inserted)  values(?, ?, ?, ?, ?, ?, ?)", arr_clients)
     con.commit()
+    time_end = time.time()
+    # print(f"Запись данных клиентов {time_end - time_start}")
     return arr_pairs

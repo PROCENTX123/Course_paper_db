@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from itertools import product
 from tqdm import tqdm
+import gc
+import time
 
 #открытие коннекта
 client = MongoClient("mongodb://localhost:27017/")
@@ -30,11 +32,11 @@ class Call:
     def to_dict(self):
         return self.__dict__()
 
-def fill_call(task_dict, arr_pair_for_call, arr_start_time, arr_end_time):
+def fill_call(arr_pair_for_call, arr_start_time, arr_end_time):
     calls_list = []
     call_doc_list = []
     id = 1
-    total_items = len(task_dict) / 4
+    total_items = len(arr_pair_for_call)
     with tqdm(total= total_items, desc="Filling call dict") as pbar:
         for user_task_client in arr_pair_for_call:
             for start_time, end_time in product(arr_start_time, arr_end_time):
@@ -53,6 +55,14 @@ def fill_call(task_dict, arr_pair_for_call, arr_start_time, arr_end_time):
         #         for start_time, end_time in product(arr_start_time, arr_end_time):
         #             call = Call(id, value.user_assigned, value.id, start_time, end_time, value.client_id, value.client_name)
 
+    time_start = time.time()
     col_call.insert_many(call_doc_list)
-    print("Call list completed")
+    time_end = time.time()
+    print(f"Запись данных звонков {time_end - time_start}")
+    # print("Call list completed")
+
+    del call_doc_list
+    del arr_pair_for_call
+    gc.collect()
+
     return calls_list

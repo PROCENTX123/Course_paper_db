@@ -1,5 +1,7 @@
 import sqlite3
 from itertools import product
+import time
+import sys
 
 
 
@@ -58,8 +60,16 @@ def fill_task(arr_client_and_user, arr_start_time,arr_end_time):
             elif id > count_all_task * 0.75 and id <=count_all_task:
                 arr_for_offered.append(id)
             id+=1
+
+    list_size_in_gigabytes = sys.getsizeof(arr_tasks) / (1024 ** 3)
+    print(f"Размер списка в гигабайтах: {list_size_in_gigabytes} ГБ")
+
+    time_start = time.time()
     cursor.executemany("Insert into  task (id, client_id, start_time, end_time, user_assigned) values(?, ?, ?, ?, ?)", arr_tasks)
     con.commit()
+    time_end = time.time()
+    # print(f"Запись данных тасков {time_end - time_start}")
+
     return arr_pairs_for_meeting, arr_pairs_for_calls, arr_for_sale, arr_for_offered
 
 
