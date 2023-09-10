@@ -29,4 +29,5 @@ def fill_product(arr_product_name, arr_unit, arr_price_per_unit):
     cursor.executemany("INSERT INTO product (product_name, unit, price_per_unit) VALUES (?, ?, ?)", arr_products)
     con.commit()
     time_end = time.time()
+    return list_size_in_gigabytes
     # print(f"Запись данных продуктов {time_end - time_start}")

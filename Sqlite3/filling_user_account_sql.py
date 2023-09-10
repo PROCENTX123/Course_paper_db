@@ -29,6 +29,7 @@ def fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords):
     cursor.executemany("INSERT INTO user_account (first_name, last_name, user_name, password) VALUES (?, ?, ?, ?)", arr_users)
     con.commit()
     time_end = time.time()
+    return list_size_in_gigabytes
     # print(f"Запись данных юзеров {time_end - time_start}")
 
 

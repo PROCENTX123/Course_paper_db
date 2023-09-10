@@ -13,7 +13,7 @@ import filling_product_sold_sql
 import filling_product_offered_sql
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     # обязательный сетап открытия
     con = sqlite3.connect("C:/Users/user/DataGripProjects/Course_paper_sql/identifier.sqlite")
     con.execute("Pragma foreign_keys = 1")
@@ -28,7 +28,7 @@ if __name__=="__main__":
     arr_lastname = ["Grigorev", "Ivanov", "Petrov", "Sidorov", "X"]
     arr_username = ["Procent", "Lox", "MOx", "Bubaleh", "uxz"]
     arr_passwords = ["12345", "54321", "11111", "123", "00000"]
-    filling_user_account_sql.fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords)
+    size_user = filling_user_account_sql.fill_user_account(arr_name, arr_lastname, arr_username, arr_passwords)
 
 
     #data
@@ -41,11 +41,11 @@ if __name__=="__main__":
     # arr_contact_person = ["Vasiliy"]
 
     # 120 000 тасков
-    # arr_client_name = ["BBC", "HBC", "Rockstar", "Ponchiki"]
-    # arr_client_adress = ["Курская 4а", "Василевская 16"]
-    # arr_phone = ["11111", "22222", "33333"]
-    # arr_email = ["romkagrigorev@mail.ru"]
-    # arr_contact_person = ["Vasiliy", "Vanya"]
+    arr_client_name = ["BBC", "HBC", "Rockstar", "Ponchiki"]
+    arr_client_adress = ["Курская 4а", "Василевская 16"]
+    arr_phone = ["11111", "22222", "33333"]
+    arr_email = ["romkagrigorev@mail.ru"]
+    arr_contact_person = ["Vasiliy", "Vanya"]
 
     # 675 000 тасков
     # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS"]
@@ -88,17 +88,17 @@ if __name__=="__main__":
     # arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya"]
 
     # 13.2 млн тасков
-    arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
-                       "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал", "DYW", "Тинькофф", "МТС", "Билайн",
-                       "Мегафон", "Райфайзен"]
-    arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15",
-                         "Заводская 30", "Скобелевская 16", "Краснознаменская 20"]
-    arr_phone = ["11111", "22222", "33333", "444444", "55555", "6666666"]
-    arr_email = ["romkagrigorev@mail.ru"]
-    arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya", "Kolya"]
+    # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
+    #                    "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал", "DYW", "Тинькофф", "МТС", "Билайн",
+    #                    "Мегафон", "Райфайзен"]
+    # arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15",
+    #                      "Заводская 30", "Скобелевская 16", "Краснознаменская 20"]
+    # arr_phone = ["11111", "22222", "33333", "444444", "55555", "6666666"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya", "Kolya"]
     arr_user_inserted = filling_client_sql.get_user_inserted()
 
-    pair_client_user = filling_client_sql.fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted)
+    pair_client_user, size_client = filling_client_sql.fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, arr_contact_person, arr_user_inserted)
 
 
     #data
@@ -112,16 +112,16 @@ if __name__=="__main__":
 
 
     #data
-    arr_pair_for_meeting, arr_pair_for_call, arr_for_sale, arr_for_offered = filling_task_sql.fill_task(arr_client_and_user, arr_start_time, arr_end_time)
+    arr_pair_for_meeting, arr_pair_for_call, arr_for_sale, arr_for_offered, size_task = filling_task_sql.fill_task(arr_client_and_user, arr_start_time, arr_end_time)
     arr_start_time_meeting = [datetime.datetime(year=2023, month=9, day=19, hour=10, minute=00, second=00)]
     arr_end_time_meeting = [datetime.datetime(year=2023, month=9, day=19, hour=14, minute=00, second=00)]
 
-    filling_meeting_sql.fill_meeting(arr_pair_for_meeting, arr_start_time_meeting, arr_end_time_meeting)
+    size_meeting = filling_meeting_sql.fill_meeting(arr_pair_for_meeting, arr_start_time_meeting, arr_end_time_meeting)
 
     #data
     arr_start_time_call = [datetime.datetime(year=2023, month=9, day=25, hour=9, minute=00, second=00)]
     arr_end_time_call = [datetime.datetime(year=2023, month=9, day=25, hour=12, minute=00, second=00)]
-    filling_call_sql.fill_call(arr_pair_for_call, arr_start_time_call, arr_end_time_call)
+    size_call = filling_call_sql.fill_call(arr_pair_for_call, arr_start_time_call, arr_end_time_call)
 
 
 
@@ -129,19 +129,19 @@ if __name__=="__main__":
     product_name = ["Стекло", "Гантели", "Машина"]
     unit = [2, 3, 4, 5]
     price_per_unit = [100, 200, 300]
-    filling_product_sql.fill_product(product_name, unit, price_per_unit)
+    size_product = filling_product_sql.fill_product(product_name, unit, price_per_unit)
 
 
     #data
     arr_id_product = filling_product_sold_sql.get_product_id()
     arr_units = [2, 3, 4, 5]
-    filling_product_sold_sql.fill_product_sold(arr_id_product, arr_for_sale, arr_units)
+    size_product_sold = filling_product_sold_sql.fill_product_sold(arr_id_product, arr_for_sale, arr_units)
 
 
     #data
     arr_id_product = filling_product_offered_sql.get_product_id()
     arr_units = [2, 3, 4, 5]
-    filling_product_offered_sql.fill_product_offered(arr_id_product, arr_for_offered, arr_units)
+    size_product_offered = filling_product_offered_sql.fill_product_offered(arr_id_product, arr_for_offered, arr_units)
 
     # индексы для запроса с такой то даты по такую то дату
     # cursor.execute("CREATE INDEX idx_task_client_id ON task (client_id)")
@@ -152,15 +152,14 @@ if __name__=="__main__":
     # cursor.execute("create index idx_task_end_time on task(end_time)")
 
     #индексы для запроса на всю статистику
-    cursor.execute("CREATE INDEX idx_task_client_id ON task (client_id)")
-    cursor.execute("create index idx_meeting_task_id on meeting(task_id)")
-    cursor.execute("create index idx_call_task_id on call(task_id)")
-    cursor.execute("create index idx_product_sold_task_id on product_sold(task_id)")
-    cursor.execute("create index idx_product_offer_task_id on product_offered(task_id)")
-    cursor.execute("create index idx_client_name on client (client_name)")
-
-    #индекс для 3-его запроса
     # cursor.execute("CREATE INDEX idx_task_client_id ON task (client_id)")
+    # cursor.execute("create index idx_meeting_task_id on meeting(task_id)")
+    # cursor.execute("create index idx_call_task_id on call(task_id)")
+    # cursor.execute("create index idx_product_sold_task_id on product_sold(task_id)")
+    # cursor.execute("create index idx_product_offer_task_id on product_offered(task_id)")
+    # cursor.execute("create index idx_client_name on client (client_name)")
+
+    #индекс для 3-его запрос
     # cursor.execute("create index idx_product_sold_task_id on product_sold(task_id)")
     # cursor.execute("create index idx_product_sold_product_id on product_sold(product_id)")
     # cursor.execute("create index idx_product_units on product(unit)")
@@ -198,7 +197,16 @@ if __name__=="__main__":
     # for row in results:
     #     print(row)
 
+    cursor.execute("Pragma page_size")
+    page_size = cursor.fetchall()[0][0]
+    cursor.execute("Pragma page_count")
+    page_count = cursor.fetchall()[0][0]
+    database_size_gb = (page_size * page_count) / (1024 * 1024 * 1024)
+
+    all_size = size_user + size_client + size_task + size_meeting + size_call + size_product + size_product_sold + size_product_offered
+    print(f"Общий размер данных {all_size}")
+    print(f"CHeck {database_size_gb}")
+
     # сетап закрытия
     cursor.close()
     con.close()
-

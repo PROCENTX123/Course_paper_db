@@ -39,11 +39,11 @@ if __name__ == "__main__":
     # arr_contact_person = ["Vasiliy"]
 
     #120 000 тасков
-    # arr_client_name = ["BBC", "HBC", "Rockstar", "Ponchiki"]
-    # arr_client_adress = ["Курская 4а", "Василевская 16"]
-    # arr_phone = ["11111", "22222", "33333"]
-    # arr_email = ["romkagrigorev@mail.ru"]
-    # arr_contact_person = ["Vasiliy", "Vanya"]
+    arr_client_name = ["BBC", "HBC", "Rockstar", "Ponchiki"]
+    arr_client_adress = ["Курская 4а", "Василевская 16"]
+    arr_phone = ["11111", "22222", "33333"]
+    arr_email = ["romkagrigorev@mail.ru"]
+    arr_contact_person = ["Vasiliy", "Vanya"]
 
     #675 000 тасков
     # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS"]
@@ -87,14 +87,14 @@ if __name__ == "__main__":
 
 
     #13.2 млн тасков
-    arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
-                       "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал", "DYW", "Тинькофф", "МТС", "Билайн",
-                       "Мегафон", "Райфайзен"]
-    arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15",
-                         "Заводская 30", "Скобелевская 16", "Краснознаменская 20"]
-    arr_phone = ["11111", "22222", "33333", "444444", "55555", "6666666"]
-    arr_email = ["romkagrigorev@mail.ru"]
-    arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya", "Kolya"]
+    # arr_client_name = ["BBC", "Valve", "Rockstar", "Ponchiki", "StarBucks", "Leliki", "Boliki", "Navi", "VP", "TS",
+    #                    "HR", "Tundra", "5 озер", "Балтика", "Охота", "Арсенал", "DYW", "Тинькофф", "МТС", "Билайн",
+    #                    "Мегафон", "Райфайзен"]
+    # arr_client_adress = ["Курская 4а", "Василевская 16", "Тропическая 22", "Заводская 20Б", "Горопачи 15",
+    #                      "Заводская 30", "Скобелевская 16", "Краснознаменская 20"]
+    # arr_phone = ["11111", "22222", "33333", "444444", "55555", "6666666"]
+    # arr_email = ["romkagrigorev@mail.ru"]
+    # arr_contact_person = ["Vasiliy", "Vanya", "Tolya", "Zhenya", "Kolya"]
 
     arr_user_inserted = filling_client_nosql.get_user_inserted()
 

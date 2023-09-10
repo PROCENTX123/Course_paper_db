@@ -55,4 +55,5 @@ def fill_call(pair_user_task, arr_start_time, arr_end_time):
     cursor.executemany("Insert into  call (id, user_account_id, task_id, start_time, end_time) values(?, ?, ?, ?, ?)", arr_calls)
     con.commit()
     time_end = time.time()
+    return list_size_in_gigabytes
     # print(f"Запись данных звонков {time_end - time_start}")

@@ -47,4 +47,5 @@ def fill_product_sold(arr_id_product, arr_task_for_sale, arr_units):
     cursor.executemany("INSERT INTO product_sold (product_id, task_id, units) VALUES (?, ?, ?)", arr_sales)
     con.commit()
     time_end = time.time()
+    return list_size_in_gigabytes
     # print(f"Запись данных продаж {time_end - time_start}")

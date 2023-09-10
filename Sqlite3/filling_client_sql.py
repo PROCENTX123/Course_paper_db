@@ -57,4 +57,4 @@ def fill_client(id, arr_client_name, arr_client_adress, arr_phone, arr_email, ar
     con.commit()
     time_end = time.time()
     # print(f"Запись данных клиентов {time_end - time_start}")
-    return arr_pairs
+    return arr_pairs, list_size_in_gigabytes

@@ -70,7 +70,7 @@ def fill_task(arr_client_and_user, arr_start_time,arr_end_time):
     time_end = time.time()
     # print(f"Запись данных тасков {time_end - time_start}")
 
-    return arr_pairs_for_meeting, arr_pairs_for_calls, arr_for_sale, arr_for_offered
+    return arr_pairs_for_meeting, arr_pairs_for_calls, arr_for_sale, arr_for_offered, list_size_in_gigabytes
 
 
 
